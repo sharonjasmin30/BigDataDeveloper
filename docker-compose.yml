@@ -1,4 +1,4 @@
-# version: '3'
+version: '3.8'
 services:
 
   namenode:
@@ -52,46 +52,46 @@ services:
     #   net_pet:
     #     ipv4_address: 172.27.1.2
   
-  hive-server:
-    image: bde2020/hive:2.3.2-postgresql-metastore
-    container_name: hive-server
-    env_file:
-      - ./hadoop-hive.env
-    environment:
-      HIVE_CORE_CONF_javax_jdo_option_ConnectionURL: "jdbc:postgresql://hive-metastore/metastore"
-      SERVICE_PRECONDITION: "hive-metastore:9083"
-    ports:
-      - "10000:10000"
-    depends_on:
-      - hive-metastore
-    networks:
-      net_pet:
-        ipv4_address: 172.27.1.7
+  # hive-server:
+  #   image: bde2020/hive:2.3.2-postgresql-metastore
+  #   container_name: hive-server
+  #   env_file:
+  #     - ./hadoop-hive.env
+  #   environment:
+  #     HIVE_CORE_CONF_javax_jdo_option_ConnectionURL: "jdbc:postgresql://hive-metastore/metastore"
+  #     SERVICE_PRECONDITION: "hive-metastore:9083"
+  #   ports:
+  #     - "10000:10000"
+  #   depends_on:
+  #     - hive-metastore
+  #   networks:
+  #     net_pet:
+  #       ipv4_address: 172.27.1.7
 
-  hive-metastore:
-    image: bde2020/hive:2.3.2-postgresql-metastore
-    container_name: hive-metastore
-    env_file:
-      - ./hadoop-hive.env
-    command: /opt/hive/bin/hive --service metastore
-    environment:
-      SERVICE_PRECONDITION: "namenode:50070 datanode:50075 hive-metastore-postgresql:5432"
-    ports:
-      - "9083:9083"
-    depends_on:
-      - hive-metastore-postgresql
-    networks:
-      net_pet:
-        ipv4_address: 172.27.1.8
+  # hive-metastore:
+  #   image: bde2020/hive:2.3.2-postgresql-metastore
+  #   container_name: hive-metastore
+  #   env_file:
+  #     - ./hadoop-hive.env
+  #   command: /opt/hive/bin/hive --service metastore
+  #   environment:
+  #     SERVICE_PRECONDITION: "namenode:50070 datanode:50075 hive-metastore-postgresql:5432"
+  #   ports:
+  #     - "9083:9083"
+  #   depends_on:
+  #     - hive-metastore-postgresql
+  #   networks:
+  #     net_pet:
+  #       ipv4_address: 172.27.1.8
 
-  hive-metastore-postgresql:
-    image: bde2020/hive-metastore-postgresql:2.3.0
-    container_name: hive-metastore-postgresql
-    depends_on:
-      - datanode
-    networks:
-      net_pet:
-        ipv4_address: 172.27.1.9
+  # hive-metastore-postgresql:
+  #   image: bde2020/hive-metastore-postgresql:2.3.0
+  #   container_name: hive-metastore-postgresql
+  #   depends_on:
+  #     - datanode
+  #   networks:
+  #     net_pet:
+  #       ipv4_address: 172.27.1.9
 
   # spark-master:
   #   image: bde2020/spark-master:2.4.0-hadoop2.7
@@ -124,19 +124,19 @@ services:
   #     net_pet:
   #       ipv4_address: 172.27.1.11
 
-  sqoop:
-    build: ./sqoop
-    container_name: sqoop
-    depends_on:
-      - mysql
-      - hive-server
-      - namenode
-      - datanode
-    tty: true
-    stdin_open: true
-    networks:
-      net_pet:
-        ipv4_address: 172.27.1.13
+  # sqoop:
+  #   build: ./sqoop
+  #   container_name: sqoop
+  #   depends_on:
+  #     - mysql
+  #     - hive-server
+  #     - namenode
+  #     - datanode
+  #   tty: true
+  #   stdin_open: true
+  #   networks:
+  #     net_pet:
+  #       ipv4_address: 172.27.1.13
 
   zookeeper:
     image: bitnami/zookeeper:3.8
